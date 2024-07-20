@@ -1,0 +1,7 @@
+{
+    "keyforauth": "TrackExpense_jwtPrivateKey",
+    "emailName": "email_name",
+    "emailPass": "password",
+    "db": "mongodb://localhost:27017/trackexpense"
+  }
+  

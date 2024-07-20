@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "index.js"
+      }
+    ],
+    "env": {
+    "NODE_ENV": "production",
+    "SUPPRESS_NO_CONFIG_WARNING": "true",
+    "emailName": "trackexpenses07@gmail.com"
+  }
+  }
+  

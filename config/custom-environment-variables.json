@@ -1,0 +1,6 @@
+{
+    "keyforauth": "TrackExpense_jwtPrivateKey",
+    "emailName":"email_name",
+    "emailPass":"password",
+    "db":"db_url"
+}
