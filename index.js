@@ -16,6 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 
+require('./routes/scheduler')
 require("./startup/routes")(app);
 require('./startup/db')()
 require("./startup/config")();
