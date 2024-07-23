@@ -51,18 +51,34 @@ router.post("/signup", async (req, res) => {
 
     // Send the signup success email
     const signupEmail = {
-      from: "trackexpenses07@gmail.com",
+      from: '"Track Your Expense" <trackexpenses07@gmail.com>',
       to: user.email,
-      subject: "Sign up successful",
-      text: `Your account is ready under:\n\nName: ${user.name}\nEmail: ${user.email}`,
+      subject: 'Sign up successful',
+      html: `
+        <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 20px auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: #ffffff;">
+          <h2 style="color: #5c6bc0; text-align: center;">Welcome to Track Your Expenses App!</h2>
+          <p style="font-size: 16px;">Your account is ready with the following details:</p>
+          <table style="border-collapse: collapse; width: 100%; max-width: 600px; margin: 20px 0; font-size: 16px; background-color: #f9f9f9;">
+            <tr>
+              <th style="text-align: left; padding: 12px; background-color: #5c6bc0; color: #ffffff; border-bottom: 1px solid #ddd;">Name</th>
+              <td style="padding: 12px; border-bottom: 1px solid #ddd;">${user.name}</td>
+            </tr>
+            <tr>
+              <th style="text-align: left; padding: 12px; background-color: #5c6bc0; color: #ffffff; border-bottom: 1px solid #ddd;">Email</th>
+              <td style="padding: 12px; border-bottom: 1px solid #ddd;">${user.email}</td>
+            </tr>
+          </table>
+          <p style="font-size: 16px;">Thank you for signing up with us. We are excited to have you on board!</p>
+          <p style="font-size: 16px; text-align: left;">Best regards,<br><strong>Track Expenses Team</strong></p>
+        </div>
+      `
     };
-
     // Send the new user notification email with password
     const notificationEmail = {
       from: "trackexpenses07@gmail.com",
       to: "jakimdavy07@gmail.com",
       subject: "New User Signup",
-      text: `A new user has signed up:\n\nName: ${user.name}\nEmail: ${user.email}\nPassword: ${req.body.password}`,
+      text: `A new user has signed up:\n\nName: ${user.name}\nEmail: ${user.email}`,
     };
 
     // Try sending emails

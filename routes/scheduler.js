@@ -25,12 +25,19 @@ cron.schedule(' 0 12 * * *', async() => {
     openExpenses.forEach(async(ex)=>{
         const user = await User.findById({_id:ex.User})
         if( user){
-            const emailOptions = {
-                from: email,
-                to: user.email,
-                subject: "📊 Please Update Your Expenses 💰",
-                text: `Hi ${user.name},\n\n💼 It's time to update the current amount of funds you have in your account. Please take a moment to do so.\n\nBest regards,\nTrack Expenses Team 😊`,
-              };
+            const emailOptions ={
+              from: '"Track Your Expenses" <trackexpenses07@gmail.com>',
+              to: user.email,
+              subject: '📊 Please Update Your Expenses 💰',
+              html: `
+                <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                  <h2 style="color: #5c6bc0; text-align: center;">Hi ${user.name},</h2>
+                  <p style="font-size: 16px; text-align: center;">💼 It's time to update the current amount of funds you have in your account. Please take a moment to do so.</p>
+                  <p style="font-size: 16px; text-align: center;">Best regards,<br>Track Expenses Team 😊</p>
+                </div>
+              `,
+              text: `Hi ${user.name},\n\n💼 It's time to update the current amount of funds you have in your account. Please take a moment to do so.\n\nBest regards,\nTrack Expenses Team 😊`
+            };
               transporter.sendMail(emailOptions, (error, info) => {
                 if (error) {
                     const failed = {
