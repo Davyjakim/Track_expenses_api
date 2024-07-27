@@ -51,7 +51,6 @@ router.get("/recent_monthExpenses/:startdate/:enddate/:currency", auth, async (r
   
   const { currency, rent, gym, entertainment, other,date } = monthlyExpenses[0];
   const ress = rent + gym + entertainment + other;
-  console.log("actual date",date);
   const total = convertCurrency(ress, currency, desiredCurrency, exchangeRates);
   res.send({ total, desiredCurrency });
 });
