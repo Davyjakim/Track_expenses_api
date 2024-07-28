@@ -2,7 +2,7 @@ const cron = require("node-cron");
 const nodemailer = require("nodemailer");
 const { User } = require("../models/user");
 const { WeeklyExpense } = require("../models/weeklyExpense");
-const mongoose = require("mongoose");
+
 
 const email = "trackexpenses07@gmail.com";
 const pass = process.env.password;

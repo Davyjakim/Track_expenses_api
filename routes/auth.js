@@ -39,7 +39,7 @@ router.post("/validateToken", async (req, res) => {
       return res.send({ valid: false });
     }
   } catch (e) {
-    return res.status(400).send(e.message);
+    return res.status(400).send(e);
   }
 });
 

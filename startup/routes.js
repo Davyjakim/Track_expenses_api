@@ -5,6 +5,7 @@ const weeklyExpense = require("../routes/weeklyExpense")
 const previewExpenses= require("../routes/previewExpenses")
 const auth = require("../routes/auth");
 const users= require("../routes/user")
+const comments= require("../routes/comment")
 module.exports = function (app) {
     app.use(express.json());
     app.use("/monthlyexpenses", monthlyexpenses);
@@ -12,6 +13,7 @@ module.exports = function (app) {
     app.use("/weeklyexpenses/preview", previewExpenses);
     app.use("/users", users);
     app.use("/auth", auth);
+    app.use("/comment", comments);
     app.use(error)
   };
   
