@@ -15,8 +15,10 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-cron.schedule(" 0 12 * * *", async () => {
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+cron.schedule(" 31 12 * * *", async () => {
+  const today = new Date();
+today.setHours(0, 0, 0, 0);
+  const sevenDaysAgo = new Date(today.getTime() - 6 * 24 * 60 * 60 * 1000);
   const openExpenses = await WeeklyExpense.find({
     startdate: { $lte: sevenDaysAgo },
     isExpenseOpen: true,
